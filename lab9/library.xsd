@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Объявление пространства имён XML Schema -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <!-- Определение корневого элемента "library" -->
+  <xs:element name="library">
+    <xs:complexType>
+      <xs:sequence>
+        <!-- Элемент "author", может встречаться многократно (maxOccurs="unbounded") -->
+        <xs:element name="author" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <!-- Элемент "book", может встречаться многократно -->
+              <xs:element name="book" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <!-- Элемент "title" — строка -->
+                    <xs:element name="title" type="xs:string"/>
+                    <!-- Элемент "year" — целое число от 1800 до 2025 -->
+                    <xs:element name="year">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:integer">
+                          <xs:minInclusive value="1800"/>
+                          <xs:maxInclusive value="2025"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <!-- Элемент "genre" — строка -->
+                    <xs:element name="genre" type="xs:string"/>
+                    <!-- Элемент "price" — положительное число с двумя знаками после запятой -->
+                    <xs:element name="price">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:decimal">
+                          <!-- Значение должно быть больше 0 -->
+                          <xs:minExclusive value="0"/>
+                          <!-- Разрешено ровно 2 знака после запятой -->
+                          <xs:fractionDigits value="2"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                  </xs:sequence>
+                  <!-- Атрибут "id" — положительное целое число, обязательный -->
+                  <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <!-- Атрибут "name" у автора — строка, обязательный -->
+            <xs:attribute name="name" type="xs:string" use="required"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
